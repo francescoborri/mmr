@@ -1,6 +1,6 @@
 ## Generazione di MMR *proof* consecutivi per `mint`
 
-Per generare MMR *proof* consecutivi per $n$ elementi, per poi essere passati come input a più chiamate consecutive a `mint`, si usa il seguente comando.
+Per generare MMR *proof* consecutivi per $n$ elementi, per poi essere passati come input a più chiamate consecutive di `mint`, si usa il seguente comando.
 
 ```bash
 $ cargo run --bin gen_mint_inputs -- <out_file_path> <n> <to_address>
