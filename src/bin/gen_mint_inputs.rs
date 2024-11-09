@@ -9,17 +9,17 @@ use std::{
 fn main() -> Result<()> {
     let args = args().collect::<Vec<String>>();
 
-    if args.len() != 3 && args.len() != 4 {
+    if args.len() != 4 {
         eprintln!(
-            "Usage: {} <num_tokens> <out_file_path> [<to_address>]",
+            "Usage: {} <out_file_path> <num_tokens> <to_address>",
             args[0]
         );
         exit(1);
     }
 
-    let num_tokens = args[1].parse::<u64>().expect("invalid num_tokens");
-    let out_file_path = &args[2];
-    let to_address = args.get(3);
+    let out_file_path = &args[1];
+    let num_tokens = args[2].parse::<u64>().expect("invalid num_tokens");
+    let to_address = &args[3];
 
     if num_tokens == 0 {
         eprintln!("num_tokens must be greater than 0");
@@ -35,7 +35,7 @@ fn main() -> Result<()> {
     let mut prev_root = mmr.root();
 
     let first_item_proof = mmr.gen_proof(0);
-    write_file(
+    write_line(
         &mut out_file,
         to_address,
         &Proof::default(),
@@ -52,31 +52,28 @@ fn main() -> Result<()> {
         assert!(new_token_proof.verify());
         assert!(prev_token_proof.verify_ancestor(prev_root));
 
-        write_file(
+        write_line(
             &mut out_file,
             to_address,
             &prev_token_proof,
             &new_token_proof,
         )?;
+        
         prev_root = mmr.root();
     }
 
     Ok(())
 }
 
-fn write_file(
+fn write_line(
     out_file: &mut File,
-    address: Option<&String>,
+    to_address: &String,
     prev_token_proof: &Proof,
     new_token_proof: &Proof,
 ) -> Result<()> {
-    if let Some(address) = address {
-        writeln!(
-            out_file,
-            "\"{}\",{},{}",
-            address, prev_token_proof, new_token_proof
-        )
-    } else {
-        writeln!(out_file, "{},{}", prev_token_proof, new_token_proof)
-    }
+    writeln!(
+        out_file,
+        "\"{}\",{},{}",
+        to_address, prev_token_proof, new_token_proof
+    )
 }
