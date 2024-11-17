@@ -122,6 +122,7 @@ contract MmrERC721 is ERC721 {
                 valid &&
                 prevTokenProof.tokenId == prevTokenId &&
                 prevTokenProof.tokenNum == prevNumTokens &&
+                prevTokenProof.root == newTokenProof.root &&
                 _verifyProof(prevTokenProof) &&
                 _verifyAncestryProof(prevTokenProof, prevRoot);
         }
