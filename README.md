@@ -12,4 +12,14 @@ La prima `mint` non verifica `prevTokenProof`, in quanto non c'è ancora alcun *
 
 I `tokenId` dei *token* generati sono $1\ldots n$ e non tutti $0$ per evitare che `mint` fallisca a causa di *token* duplicati.
 
-In cima a ogni riga viene inoltre aggiunto il valore di `<to_address>`, ossia l'indirizzo a cui inviare i *token* generati, così da far combaciare ogni riga con i parametri di `mint`. `<to_address>` è una stringa esadecimale che initizia con `0x` e rappresenta un indirizzo Ethereum.
+In cima a ogni riga viene inoltre aggiunto il valore di `<to_address>`, ossia l'indirizzo a cui inviare i *token* generati, così da far combaciare ogni riga con i parametri di `mint`. `<to_address>` è una stringa esadecimale che inizia con `0x` e rappresenta un indirizzo Ethereum.
+
+## Generazione di MMR *proof* per `verify`
+
+Il seguente comando permette di generare il MMR proof con dimensione massima per ogni MMR con dimensione da 1 a $n$.
+
+```bash
+$ cargo run --bin gen_verify_inputs -- <out_file_path> <n>
+```
+
+Il comando genera $n$ MMR proof e li scrive nel file `out_file_path`, uno per riga. Il MMR proof alla riga $i$ è relativo alla prima foglia del MMR con $i$ elementi inseriti.
