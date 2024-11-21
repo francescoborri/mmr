@@ -1,4 +1,4 @@
-mmr_height,mmr_leaves,extra_gas_mint,gas_verify
+mmr_height,mmr_leaves,gas_mint,gas_verify
 0,1,4680,3159
 1,2,13475,4433
 2,4,16755,5707
